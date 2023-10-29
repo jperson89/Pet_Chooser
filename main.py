@@ -54,9 +54,9 @@ def petInput():
         print(f"Unhandled exception: {e}. Quitting for safety.")
         quitPets()
 
-# This asks for your MySQL password to start the program.
+# This asks for your MySQL credentials to start the program.
 try:
-    # This asks for for your MySQL password in a separate window, creates a connection to mySQL, and
+    # This asks for your MySQL password in a separate window, creates a connection to mySQL, and
     # hides your password from prying eyes using 'pyautogui'. In addition, you can still use any of the quit commands
     # from quitOptions. Incorrect passwords or invalid entries will exit. I'm kinda proud of this one :).
     password = pyautogui.password(text='Please enter your MySQL password or type q to quit. Invalid entries will exit.',
@@ -72,13 +72,15 @@ try:
                                    db="pets",
                                    charset='utf8mb4',
                                    cursorclass=pymysql.cursors.DictCursor)
-# Gotta define possible errors and exceptions and make the program quit nicely like we went over in class
+# You must define possible errors and exceptions and make the program quit nicely like we went over in class
 except EOFError:
     print("Quitting. Come back soon!")
     quitPets()
 except Exception as e:
     print(f"Error: {e}. Exiting Pet_Chooser.")
     exit()
+
+
 
 # According to Ken and many wise men on YouTube, this executes the SQL command that we wrote above. Everything that
 # we wrote will be put into a dictionary (petDict) that we can use to populate each list below.
@@ -122,10 +124,10 @@ while True:
             quitPets()
         # This will cover any input that might not be in the choices listed, and return a Value Error
         # Go through each one and make sure that each pet is properly linked with its owner, pet ID, age, etc.
-        # WHY ARE YOU NOT WORKING KLSAD GNEKLGNjn askkasn
         # I can't get Rex to work. I'm going insane.
+        # NVM, all I had to do was add +1 to length. I can't believe that was all.
         choice = int(choice)
-        if choice not in range(1, len(listOfPets)):
+        if choice not in range(1, len(listOfPets) + 1):
             raise ValueError
     # Instead of a ValueError making the program quit, write an exception for it
     # Make sure to put petInput after the error message so that the loop starts over
@@ -133,7 +135,7 @@ while True:
         print("Invalid input. Remember, you have to enter the number next to the pet name, but not their actual name.")
         print()
         petInput()
-    # This lets us use Ctrl-D to quit, which I have to do sometimes because I can't get stupid Rex to work OMGGGGG
+    # This lets us use Ctrl-D to quit
     except EOFError:
         print("Oh shoot, you're using the ejector seat! Program better, Jon! ABANDON SHIP!")
         quitPets()
